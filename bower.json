@@ -1,9 +1,9 @@
 {
-  "name": "Angular.js unit test project",
+  "name": "angular.js unit test project",
   "authors": [
     "Venelin Manchev <venelinphp@gmail.com>"
   ],
-  "description": "",
+  "description": "Example of unit-testing an AngularJS 1 application",
   "main": "",
   "license": "MIT",
   "homepage": "",

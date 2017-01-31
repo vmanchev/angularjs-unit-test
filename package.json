@@ -1,13 +1,16 @@
 {
   "name": "angularjs-unit-test-project",
   "version": "0.0.1",
-  "description": "",
+  "description": "Example of unit-testing an AngularJS 1 application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "bower install && gulp",
+    "start": "gulp",
+    "test": "karma start --single-run",
+    "testing": "karma start"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Venelin Manchev <venelinphp@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "gulp-wiredep": "^1.1.0"
   },
