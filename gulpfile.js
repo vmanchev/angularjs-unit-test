@@ -11,8 +11,8 @@ gulp.task('inject', function () {
 
 
 gulp.task('watch', function () {
-  gulp.watch('./app/**/*', ['inject-custom']);
+  gulp.watch('./app/**/*', ['inject']);
 });
 
-gulp.task('default', ['inject-vendor', 'inject-custom', 'watch']);
+gulp.task('default', ['inject', 'watch']);
 
