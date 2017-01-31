@@ -11,7 +11,7 @@ angular.module('todo', [
   $scope.addItem = function (item) {
 
     if (!isValidItem(item)) {
-      return;
+      return false;
     }
 
     items.push(item);
