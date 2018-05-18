@@ -38,6 +38,3 @@ karma start
 ### Code coverage
 Find the code coverage in the ./coverage folder. Just run the index.html file in a browser.
 
-### JSONPlaceholder
-Fake Online REST API for Testing and Prototyping
-https://jsonplaceholder.typicode.com

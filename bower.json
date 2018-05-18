@@ -6,7 +6,6 @@
   "description": "Example of unit-testing an AngularJS 1 application",
   "main": "",
   "license": "MIT",
-  "homepage": "",
   "private": true,
   "ignore": [
     "**/.*",
@@ -16,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "angularjs#^1.6.1",
-    "angular-mocks": "^1.6.1"
+    "angular": "1.7.x",
+    "angular-mocks": "1.7.x"
   }
 }
