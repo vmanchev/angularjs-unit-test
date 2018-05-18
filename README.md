@@ -1,5 +1,9 @@
 # Example of unit-testing an AngularJS 1 application
 
+Each resource must be tested in complete isolation from the rest of the world. 
+All dependencies should be mocked, e.g. when testing a component, we should not 
+relay at all on any injected services. 
+
 ## Step #1 - Clone the project
 ```
 git clone https://github.com/vmanchev/angularjs-unit-test.git
@@ -37,4 +41,3 @@ karma start
 
 ### Code coverage
 Find the code coverage in the ./coverage folder. Just run the index.html file in a browser.
-
