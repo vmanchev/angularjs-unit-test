@@ -4,6 +4,12 @@ Each resource must be tested in complete isolation from the rest of the world.
 All dependencies should be mocked, e.g. when testing a component, we should not 
 relay at all on any injected services. 
 
+## Examples:
+1. Component with a custom service dependency.
+2. Custom service with Angular service dependency. 
+3. Custom service, dependent on another custom service and an Angular service.
+4. Filter.
+
 ## Step #1 - Clone the project
 ```
 git clone https://github.com/vmanchev/angularjs-unit-test.git
