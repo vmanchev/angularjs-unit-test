@@ -1,8 +1,18 @@
 describe('itemsService', function () {
 
-    var $httpBackend, itemsService;
+    var $httpBackend,
+        itemsService,
+        authService;
 
-    beforeEach(module('todo'));
+    beforeEach(function () {
+        module('todo');
+
+        module(function ($provide) {
+            $provide.service('authService', function () {
+                this.isLoggedIn = jasmine.createSpy('isLoggedIn');
+            });
+        });
+    });
 
     var itemsMock = [{
         "id": 1,
@@ -18,6 +28,7 @@ describe('itemsService', function () {
     beforeEach(inject(function ($injector) {
         $httpBackend = $injector.get("$httpBackend");
         itemsService = $injector.get('itemsService');
+        authService = $injector.get('authService');
     }));
 
     afterEach(function () {
@@ -96,6 +107,27 @@ describe('itemsService', function () {
         it('should perform a delete request to remove an item', function () {
             itemsService.remove(itemsMock[0].id);
             $httpBackend.flush();
+        });
+    });
+
+    describe('getPrivateItems', function () {
+
+        it('should get private items if user is authenticated', function () {
+
+            authService.isLoggedIn.and.returnValue(true);
+
+            $httpBackend.expectGET('https://api.example.org/items/private').respond(200);
+
+            itemsService.getPrivateItems();
+            $httpBackend.flush();
+        });
+
+        it('should throw an error message when user is authenticated', function () {
+
+            authService.isLoggedIn.and.returnValue(false);
+
+            expect(function () { itemsService.getPrivateItems(); }).toThrow('AUTH.ERROR.REQUIRED');
+
         });
     });
 

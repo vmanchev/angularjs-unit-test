@@ -10,9 +10,16 @@ describe('priceFilter', function () {
         expect(priceFilter(15, { currency: 'EUR' })).toEqual('EUR 15');
     });
 
-    it('should return only the price value if currency is not provided', function () {
+    it('should return only the price value if no filter options are provided', function () {
         expect(priceFilter(15)).toEqual(15);
+    });
+
+    it('should return only the price value if an empty object is provided as filter options', function () {
         expect(priceFilter(15, {})).toEqual(15);
+    });
+
+    it('should return only the price value if currency filter option is provided as empty string', function () {
         expect(priceFilter(15, { currency: '' })).toEqual(15);
     });
+
 });

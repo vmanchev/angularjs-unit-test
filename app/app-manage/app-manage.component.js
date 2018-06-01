@@ -9,9 +9,12 @@ angular.module('todo')
             };
 
             $ctrl.getItems = function () {
-                itemsService.getAll().then(function (response) {
-                    $ctrl.items = response;
-                });
+                itemsService
+                    .getAll()
+                    .then(function (response) {
+                        $ctrl.items = response;
+                    })
+                    .catch(angular.noop);
             };
 
             $ctrl.addItem = function (item) {
@@ -20,11 +23,17 @@ angular.module('todo')
                     return false;
                 }
 
-                itemsService.add(item).then($ctrl.getItems);
+                itemsService
+                    .add(item)
+                    .then($ctrl.getItems)
+                    .catch(angular.noop);
             };
 
             $ctrl.deleteItem = function (id) {
-                itemsService.remove(id).then($ctrl.getItems);
+                itemsService
+                    .remove(id)
+                    .then($ctrl.getItems)
+                    .catch(angular.noop);
             };
 
             $ctrl.isValidItem = function (item) {

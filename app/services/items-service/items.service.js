@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('todo')
-    .service('itemsService', function ($http) {
+    .service('itemsService', function ($http,
+        authService) {
 
         var baseUrl = 'https://api.example.org/items';
 
@@ -25,4 +26,12 @@ angular.module('todo')
             return $http.delete(baseUrl + '/' + id);
         };
 
+        this.getPrivateItems = function () {
+
+            if (!authService.isLoggedIn()) {
+                throw 'AUTH.ERROR.REQUIRED';
+            }
+
+            return $http.get(baseUrl + '/private');
+        };
     });

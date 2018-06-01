@@ -1,6 +1,21 @@
 describe('appManage', function () {
 
-    var $scope, $componentController, ctrl, itemsServiceMock, itemsMock, $q, deferred;
+    var $scope,
+        $componentController,
+        ctrl,
+        itemsServiceMock,
+        $q,
+        deferred,
+        itemsMock = [{
+            "id": 1,
+            "title": "Post 1"
+        }, {
+            "id": 2,
+            "title": "Post 2"
+        }, {
+            "id": 3,
+            "title": "Post 3"
+        }];
 
     beforeEach(module('todo'));
 
@@ -11,7 +26,7 @@ describe('appManage', function () {
 
         deferred = $q.defer();
 
-        itemsServiceMock = jasmine.createSpyObj('itemsServiceMock', ['add', 'getAll', 'getById', 'remove']);
+        itemsServiceMock = jasmine.createSpyObj('itemsService', ['add', 'getAll', 'getById', 'remove']);
         itemsServiceMock.add.and.returnValue(deferred.promise);
         itemsServiceMock.getAll.and.returnValue(deferred.promise);
         itemsServiceMock.remove.and.returnValue(deferred.promise);
@@ -23,39 +38,40 @@ describe('appManage', function () {
 
         spyOn(ctrl, 'getItems').and.callThrough();
 
-        itemsMock = [{
-            "id": 1,
-            "title": "Post 1"
-        }, {
-            "id": 2,
-            "title": "Post 2"
-        }, {
-            "id": 3,
-            "title": "Post 3"
-        }];
+        ctrl.$onInit();
+
     }));
 
     describe('$onInit ', function () {
         it('should set items to an empty array', function () {
-            ctrl.$onInit();
             expect(ctrl.items).toEqual([]);
         });
     });
 
     describe('methods', function () {
-        beforeEach(function () {
-            ctrl.$onInit();
-        });
 
         describe('getItems', function () {
-            it('should use getItems method from manage service to get all the items', function () {
-                ctrl.getItems();
-                expect(itemsServiceMock.getAll).toHaveBeenCalled();
 
+            beforeEach(function () {
+                ctrl.getItems();
+            });
+
+            it('should use getItems method from manage service to get all the items', function () {
+                expect(itemsServiceMock.getAll).toHaveBeenCalled();
+            });
+
+            it('should set items to response data in case of success', function () {
                 deferred.resolve(itemsMock);
                 $scope.$apply();
 
                 expect(ctrl.items).toEqual(itemsMock);
+            });
+
+            it('should keep items as empty array in case of error response', function () {
+                deferred.reject();
+                $scope.$apply();
+
+                expect(ctrl.items).toEqual([]);
             });
         });
 
@@ -97,6 +113,16 @@ describe('appManage', function () {
 
                 expect(ctrl.getItems).toHaveBeenCalled();
             });
+
+            it('should not call ctrl.getItems when a new item was not created', function () {
+                ctrl.addItem({ title: 'test4' });
+                expect(itemsServiceMock.add).toHaveBeenCalledWith({ title: 'test4' });
+
+                deferred.reject();
+                $scope.$apply();
+
+                expect(ctrl.getItems).not.toHaveBeenCalled();
+            });
         });
 
         describe('deleteItem', function () {
@@ -114,6 +140,17 @@ describe('appManage', function () {
 
                 expect(ctrl.getItems).toHaveBeenCalled();
             });
+
+            it('should not call ctrl.getItems when an item was not deleted', function () {
+                ctrl.deleteItem(5);
+                expect(itemsServiceMock.remove).toHaveBeenCalledWith(5);
+
+                deferred.reject();
+                $scope.$apply();
+
+                expect(ctrl.getItems).not.toHaveBeenCalled();
+            });
+
         });
     });
 
