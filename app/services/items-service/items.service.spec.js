@@ -1,134 +1,134 @@
 describe('itemsService', function () {
 
-    var $httpBackend,
-        itemsService,
-        authService;
+  var $httpBackend,
+    itemsService,
+    authService;
+
+  beforeEach(function () {
+    module('angularjs-unit-test');
+
+    module(function ($provide) {
+      $provide.service('authService', function () {
+        this.isLoggedIn = jasmine.createSpy('isLoggedIn');
+      });
+    });
+  });
+
+  var itemsMock = [{
+    'id': 1,
+    'title': 'Post 1'
+  }, {
+    'id': 2,
+    'title': 'Post 2'
+  }, {
+    'id': 3,
+    'title': 'Post 3'
+  }];
+
+  beforeEach(inject(function ($injector) {
+    $httpBackend = $injector.get('$httpBackend');
+    itemsService = $injector.get('itemsService');
+    authService = $injector.get('authService');
+  }));
+
+  afterEach(function () {
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+  });
+
+
+  describe('add', function () {
 
     beforeEach(function () {
-        module('angularjs-unit-test');
-
-        module(function ($provide) {
-            $provide.service('authService', function () {
-                this.isLoggedIn = jasmine.createSpy('isLoggedIn');
-            });
-        });
+      $httpBackend.expectPOST('https://api.example.org/items', itemsMock[0]).respond(201);
     });
 
-    var itemsMock = [{
-        "id": 1,
-        "title": "Post 1"
-    }, {
-        "id": 2,
-        "title": "Post 2"
-    }, {
-        "id": 3,
-        "title": "Post 3"
-    }];
-
-    beforeEach(inject(function ($injector) {
-        $httpBackend = $injector.get("$httpBackend");
-        itemsService = $injector.get('itemsService');
-        authService = $injector.get('authService');
-    }));
-
-    afterEach(function () {
-        $httpBackend.verifyNoOutstandingExpectation();
-        $httpBackend.verifyNoOutstandingRequest();
+    it('should perform a post request to save a new item', function () {
+      itemsService.add(itemsMock[0]);
+      $httpBackend.flush();
     });
 
+  });
 
-    describe('add', function () {
+  describe('getAll', function () {
 
-        beforeEach(function () {
-            $httpBackend.expectPOST('https://api.example.org/items', itemsMock[0]).respond(201);
-        });
-
-        it('should perform a post request to save a new item', function () {
-            itemsService.add(itemsMock[0]);
-            $httpBackend.flush();
-        });
-
+    beforeEach(function () {
+      $httpBackend.expectGET('https://api.example.org/items').respond(200, itemsMock);
     });
 
-    describe('getAll', function () {
+    it('should perform a get request to retrieve all items', function () {
 
-        beforeEach(function () {
-            $httpBackend.expectGET('https://api.example.org/items').respond(200, itemsMock);
-        });
+      var items = itemsService.getAll();
+      $httpBackend.flush();
 
-        it('should perform a get request to retrieve all items', function () {
+      items.then(function (response) {
+        expect(response.data).toEqual(itemsMock);
+      });
 
-            var items = itemsService.getAll();
-            $httpBackend.flush();
+    });
+  });
 
-            items.then(function (response) {
-                expect(response.data).toEqual(itemsMock);
-            });
+  describe('getById', function () {
 
-        });
+    beforeEach(function () {
+      $httpBackend.expectGET('https://api.example.org/items/1').respond(200, itemsMock[0]);
     });
 
-    describe('getById', function () {
+    it('should perform a get request to retrieve an item by id', function () {
 
-        beforeEach(function () {
-            $httpBackend.expectGET('https://api.example.org/items/1').respond(200, itemsMock[0]);
-        });
+      var item = itemsService.getById(1);
+      $httpBackend.flush();
 
-        it('should perform a get request to retrieve an item by id', function () {
+      item.then(function (response) {
+        expect(response.data).toEqual(itemsMock[0]);
+      });
 
-            var item = itemsService.getById(1);
-            $httpBackend.flush();
+    });
+  });
 
-            item.then(function (response) {
-                expect(response.data).toEqual(itemsMock[0]);
-            });
+  describe('update', function () {
 
-        });
+    beforeEach(function () {
+      $httpBackend.expectPUT('https://api.example.org/items/1', itemsMock[0]).respond(200);
     });
 
-    describe('update', function () {
+    it('should perform a put request to update an item', function () {
+      itemsService.update(itemsMock[0]);
+      $httpBackend.flush();
+    });
+  });
 
-        beforeEach(function () {
-            $httpBackend.expectPUT('https://api.example.org/items/1', itemsMock[0]).respond(200);
-        });
+  describe('remove', function () {
 
-        it('should perform a put request to update an item', function () {
-            itemsService.update(itemsMock[0]);
-            $httpBackend.flush();
-        });
+    beforeEach(function () {
+      $httpBackend.expectDELETE('https://api.example.org/items/1').respond(200);
     });
 
-    describe('remove', function () {
+    it('should perform a delete request to remove an item', function () {
+      itemsService.remove(itemsMock[0].id);
+      $httpBackend.flush();
+    });
+  });
 
-        beforeEach(function () {
-            $httpBackend.expectDELETE('https://api.example.org/items/1').respond(200);
-        });
+  describe('getPrivateItems', function () {
 
-        it('should perform a delete request to remove an item', function () {
-            itemsService.remove(itemsMock[0].id);
-            $httpBackend.flush();
-        });
+    it('should get private items if user is authenticated', function () {
+
+      authService.isLoggedIn.and.returnValue(true);
+
+      $httpBackend.expectGET('https://api.example.org/items/private').respond(200);
+
+      itemsService.getPrivateItems();
+      $httpBackend.flush();
     });
 
-    describe('getPrivateItems', function () {
+    it('should throw an error message when user is authenticated', function () {
 
-        it('should get private items if user is authenticated', function () {
+      authService.isLoggedIn.and.returnValue(false);
 
-            authService.isLoggedIn.and.returnValue(true);
+      expect(function () { itemsService.getPrivateItems(); }).toThrow('AUTH.ERROR.REQUIRED');
 
-            $httpBackend.expectGET('https://api.example.org/items/private').respond(200);
-
-            itemsService.getPrivateItems();
-            $httpBackend.flush();
-        });
-
-        it('should throw an error message when user is authenticated', function () {
-
-            authService.isLoggedIn.and.returnValue(false);
-
-            expect(function () { itemsService.getPrivateItems(); }).toThrow('AUTH.ERROR.REQUIRED');
-
-        });
     });
+  });
 
 });

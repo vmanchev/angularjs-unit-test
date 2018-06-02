@@ -1,0 +1,42 @@
+{
+  "globals": {
+    "angular": false,
+    "module": false,
+    "inject": false,
+    "document": false
+  },
+  "env": {
+    "jasmine": true
+  },
+  "plugins": [
+    "jasmine", 
+    "html"
+  ],
+  "extends": [
+    "angular",
+    "eslint:recommended",
+    "plugin:jasmine/recommended"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-undef": 1,
+    "no-unused-vars": 1,
+    "jasmine/prefer-toHaveBeenCalledWith": 0,
+    "angular/no-service-method": 0
+  }
+}
