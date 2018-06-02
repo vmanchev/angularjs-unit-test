@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('todo')
+angular.module('angularjs-unit-test')
     .service('authService', function ($http) {
 
         var baseUrl = 'https://api.example.org/auth';

@@ -1,6 +1,6 @@
 describe('priceFilter', function () {
 
-    beforeEach(module('todo'));
+    beforeEach(module('angularjs-unit-test'));
 
     beforeEach(inject(function ($injector) {
         priceFilter = $injector.get('priceFilter');

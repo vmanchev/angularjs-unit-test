@@ -1,4 +1,4 @@
-angular.module('todo')
+angular.module('angularjs-unit-test')
     .filter('price', function () {
         return function (value, params) {
 

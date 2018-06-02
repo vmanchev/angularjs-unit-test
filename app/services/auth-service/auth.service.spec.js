@@ -7,7 +7,7 @@ describe('authService', function () {
             password: 'pass'
         };
 
-    beforeEach(module('todo'));
+    beforeEach(module('angularjs-unit-test'));
 
     beforeEach(inject(function ($injector) {
         $httpBackend = $injector.get("$httpBackend");

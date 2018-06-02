@@ -1,7 +1,8 @@
-angular.module('todo')
+angular.module('angularjs-unit-test')
     .component('appManage', {
+        templateUrl: 'app-manage/app-manage.html',
         controller: function (itemsService) {
-
+console.log('app manage')
             var $ctrl = this;
 
             $ctrl.$onInit = function () {
@@ -41,4 +42,14 @@ angular.module('todo')
             };
 
         }
-    });
+    })    
+    .config([
+        '$stateProvider',
+        function ($stateProvider) {
+            $stateProvider
+                .state('manage', {
+                    url: '/manage',
+                    component: 'appManage'
+                });
+        }
+    ]);

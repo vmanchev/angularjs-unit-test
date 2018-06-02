@@ -5,7 +5,7 @@ describe('itemsService', function () {
         authService;
 
     beforeEach(function () {
-        module('todo');
+        module('angularjs-unit-test');
 
         module(function ($provide) {
             $provide.service('authService', function () {
