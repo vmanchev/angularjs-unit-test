@@ -27,22 +27,19 @@ sudo npm install -g karma-cli
 npm install 
 ```
 
-### To run the project, use one of these:
+### To run the project:
 ```
 npm start
-gulp
 ```
 
-### To run the tests once, use one of these:
+### To run the tests once:
 ```
 npm test
-karma start --single-run
 ```
 
-### To run the tests in realtime, use one of these:
+### To run the tests in realtime:
 ```
 npm run testing
-karma start
 ```
 
 ### Code coverage
