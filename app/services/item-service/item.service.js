@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('angularjs-unit-test')
-  .service('itemsService', function ($http,
-    authService) {
+  .service('itemService', function ($http,
+    userService) {
 
     var baseUrl = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -28,7 +28,7 @@ angular.module('angularjs-unit-test')
 
     this.getPrivateItems = function () {
 
-      if (!authService.isLoggedIn()) {
+      if (!userService.isLoggedIn()) {
         throw 'AUTH.ERROR.REQUIRED';
       }
 

@@ -1,14 +1,14 @@
-describe('itemsService', function () {
+describe('itemService', function () {
 
   var $httpBackend,
-    itemsService,
-    authService;
+    itemService,
+    userService;
 
   beforeEach(function () {
     module('angularjs-unit-test');
 
     module(function ($provide) {
-      $provide.service('authService', function () {
+      $provide.service('userService', function () {
         this.isLoggedIn = jasmine.createSpy('isLoggedIn');
       });
     });
@@ -27,8 +27,8 @@ describe('itemsService', function () {
 
   beforeEach(inject(function ($injector) {
     $httpBackend = $injector.get('$httpBackend');
-    itemsService = $injector.get('itemsService');
-    authService = $injector.get('authService');
+    itemService = $injector.get('itemService');
+    userService = $injector.get('userService');
   }));
 
   afterEach(function () {
@@ -44,7 +44,7 @@ describe('itemsService', function () {
     });
 
     it('should perform a post request to save a new item', function () {
-      itemsService.add(itemsMock[0]);
+      itemService.add(itemsMock[0]);
       $httpBackend.flush();
     });
 
@@ -58,7 +58,7 @@ describe('itemsService', function () {
 
     it('should perform a get request to retrieve all items', function () {
 
-      var items = itemsService.getAll();
+      var items = itemService.getAll();
       $httpBackend.flush();
 
       items.then(function (response) {
@@ -76,7 +76,7 @@ describe('itemsService', function () {
 
     it('should perform a get request to retrieve an item by id', function () {
 
-      var item = itemsService.getById(1);
+      var item = itemService.getById(1);
       $httpBackend.flush();
 
       item.then(function (response) {
@@ -93,7 +93,7 @@ describe('itemsService', function () {
     });
 
     it('should perform a put request to update an item', function () {
-      itemsService.update(itemsMock[0]);
+      itemService.update(itemsMock[0]);
       $httpBackend.flush();
     });
   });
@@ -105,7 +105,7 @@ describe('itemsService', function () {
     });
 
     it('should perform a delete request to remove an item', function () {
-      itemsService.remove(itemsMock[0].id);
+      itemService.remove(itemsMock[0].id);
       $httpBackend.flush();
     });
   });
@@ -114,19 +114,19 @@ describe('itemsService', function () {
 
     it('should get private items if user is authenticated', function () {
 
-      authService.isLoggedIn.and.returnValue(true);
+      userService.isLoggedIn.and.returnValue(true);
 
       $httpBackend.expectGET('https://jsonplaceholder.typicode.com/posts/private').respond(200);
 
-      itemsService.getPrivateItems();
+      itemService.getPrivateItems();
       $httpBackend.flush();
     });
 
     it('should throw an error message when user is authenticated', function () {
 
-      authService.isLoggedIn.and.returnValue(false);
+      userService.isLoggedIn.and.returnValue(false);
 
-      expect(function () { itemsService.getPrivateItems(); }).toThrow('AUTH.ERROR.REQUIRED');
+      expect(function () { itemService.getPrivateItems(); }).toThrow('AUTH.ERROR.REQUIRED');
 
     });
   });

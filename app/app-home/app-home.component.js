@@ -2,7 +2,7 @@ angular
   .module('angularjs-unit-test')
   .component('appHome', {
     templateUrl: 'app-home/app-home.html',
-    controller: function (itemsService, authService, $log) {
+    controller: function (itemService) {
       var $ctrl = this;
 
       $ctrl.$onInit = function () {
@@ -10,7 +10,7 @@ angular
       };
 
       $ctrl.getItems = function () {
-        itemsService
+        itemService
           .getAll()
           .then(function (response) {
             $ctrl.items = response;
@@ -23,14 +23,14 @@ angular
           return false;
         }
 
-        itemsService
+        itemService
           .add(item)
           .then($ctrl.getItems)
           .catch(angular.noop);
       };
 
       $ctrl.deleteItem = function (id) {
-        itemsService
+        itemService
           .remove(id)
           .then($ctrl.getItems)
           .catch(angular.noop);

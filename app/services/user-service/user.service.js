@@ -1,31 +1,37 @@
 'use strict';
 
 angular.module('angularjs-unit-test')
-  .service('authService', function ($http) {
+  .service('userService', function ($http, $log) {
+
+    var service = this;
 
     var baseUrl = 'https://jsonplaceholder.typicode.com/users';
 
-    var loggedIn = false;
+    var user = {};
 
     this.login = function (username, password) {
       return $http.post(baseUrl, {
         username: username,
         password: password
-      }).then(function (data) {
-        loggedIn = true;
-        return data;
+      }).then(function (response) {
+        user = response.data;
+        return response.data;
       }).catch(function (e) {
-        loggedIn = false;
+        user = {};
         return e;
       });
     };
 
-    this.getUserById = function (id) {
+    this.getById = function (id) {
       return $http.get(baseUrl + '/' + id);
     };
 
     this.isLoggedIn = function () {
-      return loggedIn;
+      return user.id > 0;
+    };
+
+    this.getUser = function () {
+      return user;
     };
 
   });

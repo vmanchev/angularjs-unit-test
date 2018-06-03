@@ -36,6 +36,7 @@
     ],
     "no-undef": 1,
     "no-unused-vars": 1,
+    "no-debugger": 0,
     "jasmine/prefer-toHaveBeenCalledWith": 0,
     "angular/no-service-method": 0
   }

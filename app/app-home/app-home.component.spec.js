@@ -3,7 +3,7 @@ describe('appHome', function () {
   var $scope,
     $componentController,
     ctrl,
-    itemsServiceMock,
+    itemServiceMock,
     $q,
     deferred,
     itemsMock = [{
@@ -26,14 +26,14 @@ describe('appHome', function () {
 
     deferred = $q.defer();
 
-    itemsServiceMock = jasmine.createSpyObj('itemsService', ['add', 'getAll', 'getById', 'remove']);
-    itemsServiceMock.add.and.returnValue(deferred.promise);
-    itemsServiceMock.getAll.and.returnValue(deferred.promise);
-    itemsServiceMock.remove.and.returnValue(deferred.promise);
+    itemServiceMock = jasmine.createSpyObj('itemService', ['add', 'getAll', 'getById', 'remove']);
+    itemServiceMock.add.and.returnValue(deferred.promise);
+    itemServiceMock.getAll.and.returnValue(deferred.promise);
+    itemServiceMock.remove.and.returnValue(deferred.promise);
 
     ctrl = $componentController('appHome', {
       $scope: $scope,
-      itemsService: itemsServiceMock
+      itemService: itemServiceMock
     });
 
     spyOn(ctrl, 'getItems').and.callThrough();
@@ -57,7 +57,7 @@ describe('appHome', function () {
       });
 
       it('should use getItems method from manage service to get all the items', function () {
-        expect(itemsServiceMock.getAll).toHaveBeenCalled();
+        expect(itemServiceMock.getAll).toHaveBeenCalled();
       });
 
       it('should set items to response data in case of success', function () {
@@ -95,19 +95,19 @@ describe('appHome', function () {
       it('should not use the add service method if item is not valid', function () {
         ctrl.addItem({});
 
-        expect(itemsServiceMock.add).not.toHaveBeenCalled();
+        expect(itemServiceMock.add).not.toHaveBeenCalled();
       });
 
       it('should use add method from manage service to create a new item, when item is valid', function () {
         ctrl.addItem({ title: 'test4' });
 
-        expect(itemsServiceMock.add).toHaveBeenCalledWith({ title: 'test4' });
+        expect(itemServiceMock.add).toHaveBeenCalledWith({ title: 'test4' });
       });
 
       it('should call ctrl.getItems after a new item was successfully created', function () {
         ctrl.addItem({ title: 'test4' });
 
-        expect(itemsServiceMock.add).toHaveBeenCalledWith({ title: 'test4' });
+        expect(itemServiceMock.add).toHaveBeenCalledWith({ title: 'test4' });
 
         deferred.resolve();
         $scope.$apply();
@@ -118,7 +118,7 @@ describe('appHome', function () {
       it('should not call ctrl.getItems when a new item was not created', function () {
         ctrl.addItem({ title: 'test4' });
 
-        expect(itemsServiceMock.add).toHaveBeenCalledWith({ title: 'test4' });
+        expect(itemServiceMock.add).toHaveBeenCalledWith({ title: 'test4' });
 
         deferred.reject();
         $scope.$apply();
@@ -131,13 +131,13 @@ describe('appHome', function () {
       it('should use message service remote method to delete an item by id', function () {
         ctrl.deleteItem(5);
         
-        expect(itemsServiceMock.remove).toHaveBeenCalledWith(5);
+        expect(itemServiceMock.remove).toHaveBeenCalledWith(5);
       });
 
       it('should call ctrl.getItems after an item was deleted', function () {
         ctrl.deleteItem(5);
 
-        expect(itemsServiceMock.remove).toHaveBeenCalledWith(5);
+        expect(itemServiceMock.remove).toHaveBeenCalledWith(5);
 
         deferred.resolve();
         $scope.$apply();
@@ -148,7 +148,7 @@ describe('appHome', function () {
       it('should not call ctrl.getItems when an item was not deleted', function () {
         ctrl.deleteItem(5);
 
-        expect(itemsServiceMock.remove).toHaveBeenCalledWith(5);
+        expect(itemServiceMock.remove).toHaveBeenCalledWith(5);
 
         deferred.reject();
         $scope.$apply();
