@@ -5,10 +5,10 @@ describe('userService', function () {
     loginDataMock = {
       username: 'user',
       password: 'pass'
-    }, 
+    },
     userMock = {
       id: 1,
-      name: 'John Doe' 
+      name: 'John Doe'
     };
 
   beforeEach(module('angularjs-unit-test'));
@@ -37,7 +37,7 @@ describe('userService', function () {
 
       userService.login(loginDataMock.username, loginDataMock.password);
       $httpBackend.flush();
-      
+
       expect(userService.isLoggedIn()).toBeTruthy();
       expect(userService.getUser()).toEqual(userMock);
     });
@@ -52,8 +52,8 @@ describe('userService', function () {
     });
   });
 
-  describe('getById', function() {
-    it('should perform a GET request to get user data by id', function() {
+  describe('getById', function () {
+    it('should perform a GET request to get user data by id', function () {
       $httpBackend.expectGET('https://jsonplaceholder.typicode.com/users/5').respond(200);
 
       userService.getById(5);
@@ -61,9 +61,37 @@ describe('userService', function () {
     });
   });
 
-  describe('getUser', function() {
-    it('should return the private user property', function() {
+  describe('getUser', function () {
+    it('should return the private user property', function () {
       expect(userService.getUser()).toEqual({});
     });
   });
+
+  describe('getAll', function () {
+    it('should perform a GET request to retrieve a paginated users list with default page number and results per page',
+      function () {
+        $httpBackend.expectGET('https://jsonplaceholder.typicode.com/users/?_page=1&_limit=10').respond(200, [userMock]);
+
+        userService.getAll();
+        $httpBackend.flush();
+      });
+
+    it('should perform a GET request to retrieve a paginated users list with provided page number and results per page arguments',
+      function () {
+        $httpBackend.expectGET('https://jsonplaceholder.typicode.com/users/?_page=2&_limit=15').respond(200, [userMock]);
+
+        userService.getAll(2, 15);
+        $httpBackend.flush();
+      });
+
+    it('should perform a GET request to retrieve a paginated users list with provided invalid values for page number and results per page arguments',
+      function () {
+        $httpBackend.expectGET('https://jsonplaceholder.typicode.com/users/?_page=1&_limit=10').respond(200, [userMock]);
+
+        userService.getAll('a', -4);
+        $httpBackend.flush();
+      });
+
+  });
+
 });

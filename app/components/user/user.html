@@ -1,0 +1,17 @@
+<div ng-if="$ctrl.users.length">
+  <h4>Users</h4>
+
+  <ul>
+    <li ng-repeat="user in $ctrl.users">
+      <a ui-sref="user({id: user.id})">{{ user.name }}</a>
+    </li>
+  </ul>
+
+</div>
+
+<div ng-if="$ctrl.user.id">
+  <h4>{{ $ctrluser.name }}</h4>
+  Email: {{ $ctrl.user.email }}
+  <br /> Phone: {{ $ctrl.user.phone }}
+  <br /> Address: {{ $ctrl.user.address | formatAddress }}
+</div>

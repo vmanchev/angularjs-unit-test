@@ -7,11 +7,34 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Angularjs unit test project</title>
+  <style>
+    ul.nav {
+      padding-left: 0;
+    }
+
+    ul.nav li {
+      display: inline-block;
+      margin-right: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
   <h1>AngularJS unit test</h1>
+
+  <ul class="nav">
+    <li>
+      <a ui-sref="home">Home</a>
+    </li>
+    <li>
+      <a ui-sref="users">Users</a>
+    </li>
+    <li>
+      <a ui-sref="items">Items</a>
+    </li>
+  </ul>
+
   <div ui-view></div>
 
   <!-- vendors:js -->

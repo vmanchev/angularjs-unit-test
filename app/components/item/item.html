@@ -1,0 +1,12 @@
+<h4>Items Component</h4>
+
+<div ng-if="$ctrl.items.length">
+  <div ng-repeat="item in $ctrl.items">
+    <h5>{{ item.title }}</h5>
+    <p>{{ item.body }}</p>
+    <div>
+      <a ui-sref="user({id: item.userId})">author id: {{ item.userId }}</a>
+    </div>
+    <hr />
+  </div>
+</div>
