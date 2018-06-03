@@ -7,6 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Angularjs unit test project</title>
+  <base href="/">
   <style>
     ul.nav {
       padding-left: 0;
@@ -16,6 +17,11 @@
       display: inline-block;
       margin-right: 20px;
     }
+
+    ul.nav li a.nav-active {
+      background: #f00;
+      color: #fff;
+    }
   </style>
 </head>
 
@@ -23,17 +29,7 @@
 
   <h1>AngularJS unit test</h1>
 
-  <ul class="nav">
-    <li>
-      <a ui-sref="home">Home</a>
-    </li>
-    <li>
-      <a ui-sref="users">Users</a>
-    </li>
-    <li>
-      <a ui-sref="items">Items</a>
-    </li>
-  </ul>
+  <app-nav></app-nav>
 
   <div ui-view></div>
 

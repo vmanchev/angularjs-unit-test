@@ -32,15 +32,44 @@ npm install
 npm start
 ```
 
-### To run the tests once:
+### To run the unit tests once:
 ```
 npm test
 ```
 
-### To run the tests in realtime:
+### To run the unit tests in realtime:
 ```
 npm run testing
 ```
 
 ### Code coverage
 Find the code coverage in the ./coverage folder. Just run the index.html file in a browser.
+
+### e2e tests
+
+1. Install protractor and webdriver
+```
+npm install -g protractor
+```
+
+2. Install JRE if you don't have it
+```
+sudo apt install default-jre
+```
+
+3. Start the webdriver server
+```
+webdriver-manager start
+```
+
+4. Start the application in new terminal tab
+```
+npm start
+```
+
+5. Run protractor
+```
+protractor e2e-tests/protractor.conf.js
+```
+
+

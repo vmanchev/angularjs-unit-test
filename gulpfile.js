@@ -1,4 +1,3 @@
-var angularFilesort = require('gulp-angular-filesort');
 var angularTemplatecache = require('gulp-angular-templatecache');
 var browserSync = require('browser-sync');
 var concat = require('gulp-concat');
@@ -10,6 +9,8 @@ var minifyHtml = require('gulp-minify-html');
 var runSequence = require('run-sequence');
 var uglify = require('gulp-uglify');
 var wiredep = require('wiredep');
+var historyApiFallback = require('connect-history-api-fallback');
+
 
 var path = {
   public: {
@@ -26,7 +27,8 @@ gulp.task('server', function (done) {
   return browserSync(
     {
       server: {
-        baseDir: path.public.web
+        baseDir: path.public.web,
+        middleware: [historyApiFallback()]
       }
     },
     done

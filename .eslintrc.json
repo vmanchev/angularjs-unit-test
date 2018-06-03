@@ -3,7 +3,9 @@
     "angular": false,
     "module": false,
     "inject": false,
-    "document": false
+    "document": false,
+    "require": false,
+    "browser": false
   },
   "env": {
     "jasmine": true
@@ -40,6 +42,7 @@
     "jasmine/no-focused-tests": 0,
     "jasmine/no-disabled-tests": 0,
     "jasmine/prefer-toHaveBeenCalledWith": 0,
-    "angular/no-service-method": 0
+    "angular/no-service-method": 0,
+    "angular/document-service": 0
   }
 }

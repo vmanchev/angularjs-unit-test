@@ -7,7 +7,11 @@
     "postinstall": "bower install && gulp",
     "start": "gulp",
     "test": "karma start --single-run",
-    "testing": "karma start"
+    "testing": "karma start",
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor e2e-tests/protractor.conf.js"
   },
   "author": "Venelin Manchev <venelinphp@gmail.com>",
   "license": "MIT",
@@ -17,6 +21,7 @@
   "devDependencies": {
     "bower": "^1.8.4",
     "browser-sync": "^2.24.4",
+    "connect-history-api-fallback": "^1.5.0",
     "del": "^3.0.0",
     "eslint": "^4.19.1",
     "eslint-config-angular": "^0.5.0",
@@ -37,6 +42,7 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-coverage": "^1.1.2",
     "karma-jasmine": "^1.1.2",
+    "protractor": "^4.0.9",
     "run-sequence": "^2.2.1",
     "wiredep": "^4.0.0"
   }
