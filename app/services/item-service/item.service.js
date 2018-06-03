@@ -26,12 +26,14 @@ angular.module('angularjs-unit-test')
       return $http.delete(baseUrl + '/' + id);
     };
 
-    this.getPrivateItems = function () {
+    this.getUserItems = function () {
 
       if (!userService.isLoggedIn()) {
         throw 'AUTH.ERROR.REQUIRED';
       }
 
-      return $http.get(baseUrl + '/private');
+      var user = userService.getUser();
+
+      return $http.get(baseUrl + '?userId=' + user.id);
     };
   });

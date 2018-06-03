@@ -10,9 +10,14 @@ describe('itemService', function () {
     module(function ($provide) {
       $provide.service('userService', function () {
         this.isLoggedIn = jasmine.createSpy('isLoggedIn');
+        this.getUser = jasmine.createSpy('getUser');
       });
     });
   });
+
+  var userMock = {
+    id: 1
+  };
 
   var itemsMock = [{
     'id': 1,
@@ -110,15 +115,16 @@ describe('itemService', function () {
     });
   });
 
-  describe('getPrivateItems', function () {
+  describe('getUserItems', function () {
 
-    it('should get private items if user is authenticated', function () {
+    it('should get user items if user is authenticated', function () {
 
       userService.isLoggedIn.and.returnValue(true);
+      userService.getUser.and.returnValue(userMock);
 
-      $httpBackend.expectGET('https://jsonplaceholder.typicode.com/posts/private').respond(200);
+      $httpBackend.expectGET('https://jsonplaceholder.typicode.com/posts?userId=' + userMock.id).respond(200);
 
-      itemService.getPrivateItems();
+      itemService.getUserItems();
       $httpBackend.flush();
     });
 
@@ -126,7 +132,7 @@ describe('itemService', function () {
 
       userService.isLoggedIn.and.returnValue(false);
 
-      expect(function () { itemService.getPrivateItems(); }).toThrow('AUTH.ERROR.REQUIRED');
+      expect(function () { itemService.getUserItems(); }).toThrow('AUTH.ERROR.REQUIRED');
 
     });
   });
