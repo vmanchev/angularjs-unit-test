@@ -2,7 +2,7 @@ angular
   .module('angularjs-unit-test')
   .component('appHome', {
     templateUrl: 'app-home/app-home.html',
-    controller: function (itemsService) {
+    controller: function (itemsService, authService, $log) {
       var $ctrl = this;
 
       $ctrl.$onInit = function () {

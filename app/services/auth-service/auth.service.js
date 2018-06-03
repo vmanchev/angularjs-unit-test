@@ -3,7 +3,7 @@
 angular.module('angularjs-unit-test')
   .service('authService', function ($http) {
 
-    var baseUrl = 'https://api.example.org/auth';
+    var baseUrl = 'https://jsonplaceholder.typicode.com/users';
 
     var loggedIn = false;
 
@@ -11,12 +11,17 @@ angular.module('angularjs-unit-test')
       return $http.post(baseUrl, {
         username: username,
         password: password
-      }).then(function () {
+      }).then(function (data) {
         loggedIn = true;
+        return data;
       }).catch(function (e) {
         loggedIn = false;
         return e;
       });
+    };
+
+    this.getUserById = function (id) {
+      return $http.get(baseUrl + '/' + id);
     };
 
     this.isLoggedIn = function () {

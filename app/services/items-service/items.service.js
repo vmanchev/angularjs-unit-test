@@ -4,7 +4,7 @@ angular.module('angularjs-unit-test')
   .service('itemsService', function ($http,
     authService) {
 
-    var baseUrl = 'https://api.example.org/items';
+    var baseUrl = 'https://jsonplaceholder.typicode.com/posts';
 
     this.add = function (item) {
       return $http.post(baseUrl, item);

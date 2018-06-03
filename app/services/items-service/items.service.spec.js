@@ -40,7 +40,7 @@ describe('itemsService', function () {
   describe('add', function () {
 
     beforeEach(function () {
-      $httpBackend.expectPOST('https://api.example.org/items', itemsMock[0]).respond(201);
+      $httpBackend.expectPOST('https://jsonplaceholder.typicode.com/posts', itemsMock[0]).respond(201);
     });
 
     it('should perform a post request to save a new item', function () {
@@ -53,7 +53,7 @@ describe('itemsService', function () {
   describe('getAll', function () {
 
     beforeEach(function () {
-      $httpBackend.expectGET('https://api.example.org/items').respond(200, itemsMock);
+      $httpBackend.expectGET('https://jsonplaceholder.typicode.com/posts').respond(200, itemsMock);
     });
 
     it('should perform a get request to retrieve all items', function () {
@@ -71,7 +71,7 @@ describe('itemsService', function () {
   describe('getById', function () {
 
     beforeEach(function () {
-      $httpBackend.expectGET('https://api.example.org/items/1').respond(200, itemsMock[0]);
+      $httpBackend.expectGET('https://jsonplaceholder.typicode.com/posts/1').respond(200, itemsMock[0]);
     });
 
     it('should perform a get request to retrieve an item by id', function () {
@@ -89,7 +89,7 @@ describe('itemsService', function () {
   describe('update', function () {
 
     beforeEach(function () {
-      $httpBackend.expectPUT('https://api.example.org/items/1', itemsMock[0]).respond(200);
+      $httpBackend.expectPUT('https://jsonplaceholder.typicode.com/posts/1', itemsMock[0]).respond(200);
     });
 
     it('should perform a put request to update an item', function () {
@@ -101,7 +101,7 @@ describe('itemsService', function () {
   describe('remove', function () {
 
     beforeEach(function () {
-      $httpBackend.expectDELETE('https://api.example.org/items/1').respond(200);
+      $httpBackend.expectDELETE('https://jsonplaceholder.typicode.com/posts/1').respond(200);
     });
 
     it('should perform a delete request to remove an item', function () {
@@ -116,7 +116,7 @@ describe('itemsService', function () {
 
       authService.isLoggedIn.and.returnValue(true);
 
-      $httpBackend.expectGET('https://api.example.org/items/private').respond(200);
+      $httpBackend.expectGET('https://jsonplaceholder.typicode.com/posts/private').respond(200);
 
       itemsService.getPrivateItems();
       $httpBackend.flush();

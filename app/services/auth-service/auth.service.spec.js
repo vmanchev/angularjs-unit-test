@@ -22,14 +22,14 @@ describe('authService', function () {
   describe('login', function () {
 
     it('should perform a post request to authenticate the user', function () {
-      $httpBackend.expectPOST('https://api.example.org/auth', loginDataMock).respond(201);
+      $httpBackend.expectPOST('https://jsonplaceholder.typicode.com/users', loginDataMock).respond(201);
 
       authService.login(loginDataMock.username, loginDataMock.password);
       $httpBackend.flush();
     });
 
     it('should set the private loggedIn property to true when authentication is successfull', function () {
-      $httpBackend.expectPOST('https://api.example.org/auth', loginDataMock).respond(201);
+      $httpBackend.expectPOST('https://jsonplaceholder.typicode.com/users', loginDataMock).respond(201);
 
       authService.login(loginDataMock.username, loginDataMock.password);
       $httpBackend.flush();
@@ -38,12 +38,21 @@ describe('authService', function () {
     });
 
     it('should keep the private loggedIn property to false when authentication has failed', function () {
-      $httpBackend.expectPOST('https://api.example.org/auth', loginDataMock).respond(404);
+      $httpBackend.expectPOST('https://jsonplaceholder.typicode.com/users', loginDataMock).respond(404);
 
       authService.login(loginDataMock.username, loginDataMock.password);
       $httpBackend.flush();
 
       expect(authService.isLoggedIn()).toBeFalsy();
+    });
+  });
+
+  describe('getUserById', function() {
+    it('should perform a GET request to get user data by id', function() {
+      $httpBackend.expectGET('https://jsonplaceholder.typicode.com/users/5').respond(200);
+
+      authService.getUserById(5);
+      $httpBackend.flush();
     });
   });
 });
