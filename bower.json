@@ -17,6 +17,7 @@
   "dependencies": {
     "angular": "1.7.x",
     "angular-mocks": "1.7.x",
-    "angular-ui-router": "^1.0.15"
+    "angular-ui-router": "^1.0.15",
+    "angular-file-saver": "^1.1.3"
   }
 }

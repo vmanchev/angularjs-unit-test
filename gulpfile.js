@@ -15,9 +15,11 @@ var historyApiFallback = require('connect-history-api-fallback');
 var path = {
   public: {
     web: 'public',
-    js: 'public/js'
+    js: 'public/js',
+    uploads: 'public/uploads'
   },
   src: {
+    misc: 'misc/test.pdf',
     js: ['app/**/*.js', '!app/**/*.spec.js'],
     html: ['app/**/*.html', '!app/index.html']
   }
@@ -40,6 +42,11 @@ gulp.task('eslint', function () {
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
+});
+
+gulp.task('copy:misc', function () {
+  return gulp.src(path.src.misc)
+    .pipe(gulp.dest(path.public.uploads));
 });
 
 gulp.task('minify:js', function () {
@@ -119,6 +126,7 @@ gulp.task('watch', function (cb) {
     runSequence(
       'eslint',
       'clean:public',
+      'copy:misc',
       'index',
       'minify:js',
       'minify:vendors',
@@ -134,6 +142,7 @@ gulp.task('default', function (cb) {
   runSequence(
     'eslint',
     'clean:public',
+    'copy:misc',
     'index',
     'minify:js',
     'minify:vendors',

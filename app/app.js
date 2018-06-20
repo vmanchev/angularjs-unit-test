@@ -1,5 +1,6 @@
 angular.module('angularjs-unit-test', [
-  'ui.router'
+  'ui.router',
+  'ngFileSaver'
 ])
   .config(
     function ($urlMatcherFactoryProvider, $urlRouterProvider) {
